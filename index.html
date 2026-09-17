@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>决策风格与领导力倾向测评</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- ============ 开始页 ============ -->
+        <section id="start-screen" class="card active">
+            <div class="card-border border-tl"></div>
+            <div class="card-border border-br"></div>
+
+            <div class="card-header">
+                <span class="header-text">编号: WORLD-2025-1800</span>
+                <span class="header-seal">测评</span>
+            </div>
+
+            <div class="card-body">
+                <h1 class="main-title">世界各国</h1>
+                <h2 class="sub-title">人物性格档案测评</h2>
+
+                <div class="divider">
+                    <span class="divider-diamond">&#9670;</span>
+                </div>
+
+                <p class="description">
+                    本测评将通过 40 道情境题（含 8 道多选、1 道排序），从稳健、开拓、务实、协同、原则、应变六个维度刻画你的决策风格与性格特征，
+                    并匹配与你最相似的世界各国重要人物。
+                </p>
+
+                <button id="start-btn" class="primary-btn">
+                    开启测评 <span class="arrow">&rarr;</span>
+                </button>
+            </div>
+
+            <div class="card-footer">
+                <p>本测评仅供自我探索与娱乐参考,不一定代表真实情况 &middot; 共 40 题（8 道多选 + 1 道排序） &middot; 预计用时 10-14 分钟</p>
+            </div>
+        </section>
+
+        <!-- ============ 答题页 ============ -->
+        <section id="question-screen" class="card">
+            <div class="card-border border-tl"></div>
+            <div class="card-border border-br"></div>
+
+            <div class="card-header">
+                <span id="question-number" class="header-text"></span>
+                <span id="question-progress-text" class="header-text"></span>
+            </div>
+            <div class="progress-bar"><div id="progress-fill"></div></div>
+
+            <div class="card-body">
+                <p id="question-text"></p>
+                <span id="multi-hint" class="multi-hint"></span>
+                <div id="options-container"></div>
+            </div>
+
+            <div class="card-footer question-footer">
+                <button id="prev-btn" class="ghost-btn">&larr; 上一题</button>
+                <span id="footer-hint" class="footer-hint">选择后立即进入下一题</span>
+                <button id="next-btn" class="next-btn">下一题 &rarr;</button>
+            </div>
+        </section>
+
+        <!-- ============ 结果页 ============ -->
+        <section id="result-screen" class="card result-card">
+            <div class="card-border border-tl"></div>
+            <div class="card-border border-br"></div>
+ 
+            
+<header class="report-header">
+   <style>
+  .report-info {
+    text-align: right; /* 让内容整体靠右对齐 */
+    color: rgb(165, 42, 42);    /* 修改字体颜色，这里使用的是深红色，可按需更改 */
+  }
+</style>
+
+<div class="report-info">
+      <p><span class="meta-label">报告编号:</span> <span class="report-id" id="report-id-element">RPT-2026-XXXXX</span> </p>
+      <p><span class="meta-label">生成日期:</span> <span class="report-date" id="report-date-element">YYYY/MM/DD</span> </p>
+<script>
+  // 1. 生成 1 到 99999 之间的随机数，并将其转为字符串，不足 5 位时在前面补 0
+  const randomNum = Math.floor(Math.random() * 99999) + 1;
+  const randomDigits = String(randomNum).padStart(5, '0');
+
+  // 2. 获取系统当前日期并格式化为 YYYY/MM/DD
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  // 月份从 0 开始算，所以需要 +1。padStart(2, '0') 确保不满两位数时前面补 0
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const formattedDate = `${year}/${month}/${day}`;
+
+  // 3. 将生成的数据写入到上面的 HTML 标签中
+  document.getElementById('report-id-element').textContent = `RPT-${year}-${randomDigits}`;
+  document.getElementById('report-date-element').textContent = formattedDate;
+</script>
+    </div>
+    <div class="header-stamp">
+      <div class="corner-stamp-pattern"></div>
+    </div>
+  </header>
+
+
+  <h3 class="main-title" style="text-align: center;">人物性格档案·匹配结果</h3>
+            <div class="result-portrait-block">
+                <div id="profile-avatar" class="portrait-img">稳</div>
+                <span class="portrait-label">档案照片</span>
+            </div>
+
+            <div class="result-match-block">
+                <span id="profile-name" class="result-name">稳健型</span>
+                <span id="profile-match-rate" class="result-match-rate">匹配度 83%</span>
+            </div>
+
+            <div class="result-meta">
+                <p><span class="meta-label">职&nbsp;务</span> <span id="profile-position">--</span></p>
+                <p><span class="meta-label">任&nbsp;期</span> <span id="profile-term">--</span></p>
+                <p><span class="meta-label">名&nbsp;言</span> &ldquo;  <span id="profile-quote"></span>&rdquo;</p>   <!-- ============ &ldquo;  ============ -->
+            </div>
+
+            <div id="profile-tags" class="result-tags"></div>
+
+            <div class="divider divider-mid">
+                <span class="divider-diamond">&#9670;</span>
+            </div>
+
+            <div class="result-body">
+                <h3 class="section-title">性格分析报告</h3>
+                <p id="personality-report" class="section-content"></p>
+
+                <h3 class="section-title">八维特征对比</h3>
+                <div id="dimension-bars" class="dim-bars"></div>
+                <div class="dim-legend">
+                    <span class="legend-item"><span class="legend-swatch"></span><span id="legend-type-label">该人物特征</span></span>
+                    <span class="legend-item"><span class="legend-tick"></span>你的得分</span>
+                </div>
+
+                <h3 class="section-title">相似人物排行</h3>
+                <div id="ranking-list"></div>
+
+
+                
+
+<!-- 1. 报告结束分割线 -->
+<div class="report-end-divider"> ———报告结束——— </div>
+
+<!-- 2. 重新测评按钮 -->
+<button id="restart-btn" class="primary-btn restart-btn">重新测评</button>
+
+<!-- 3. 分享结果按钮（复用 primary-btn 保证UI一致） -->
+<button id="share-btn" class="primary-btn restart-btn" style="margin-top: 12px;">分享结果</button>
+
+<!-- 样式调优 -->
+<style>
+  .report-end-divider {
+    text-align: center;
+    color: #8c7e75;      /* 契合深色复古风格的字色 */
+    font-size: 14px;
+    margin: 24px 0 16px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+</style>
+
+
+<!-- 1. 必须引入 html2canvas 截图依赖库（如已引入可忽略此行） -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- 2. 修改后的完整图片分享逻辑代码 -->
+<script>
+  document.getElementById('share-btn').addEventListener('click', async () => {
+    // 1. 获取需要生成图片的完整报告区域（优先获取 result-screen，否则截取 body）
+    const targetElement = document.getElementById('result-screen') || document.body;
+
+    // 2. 临时隐藏底部不需要出现在图片里的按钮与分割线（使用 visibility 保持版面挤压不变形）
+    const restartBtn = document.getElementById('restart-btn');
+    const shareBtn = document.getElementById('share-btn');
+    const divider = document.querySelector('.report-end-divider');
+    
+    const hiddenElements = [restartBtn, shareBtn, divider].filter(Boolean);
+    hiddenElements.forEach(el => el.style.visibility = 'hidden');
+
+    try {
+      // 3. 将网页转换为高清晰度 Canvas 图片
+      const canvas = await html2canvas(targetElement, {
+        useCORS: true,        // 允许跨域加载头像图片
+        scale: 2,             // 2倍清晰度导出，保证高清
+        backgroundColor: null // 保持原有背景色
+      });
+
+      // 4. 截图完成后，恢复按钮的显示
+      hiddenElements.forEach(el => el.style.visibility = 'visible');
+
+      // 5. 将 Canvas 转为 PNG 图片 Blob 对象
+      canvas.toBlob(async (blob) => {
+        if (!blob) {
+          alert('生成图片失败，请重试！');
+          return;
+        }
+
+        const file = new File([blob], '人物性格档案报告.png', { type: 'image/png' });
+
+        // 6. 优先尝试调用系统的原生图片文件分享 API
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              title: '人物性格档案',
+              text: '这是我的性格档案匹配结果，快来看看吧！',
+              files: [file] // 传入完整的图片文件
+            });
+          } catch (err) {
+            // 用户主动取消分享时不报错
+            console.log('取消分享');
+          }
+        } else {
+          // 7. 降级方案：设备/浏览器不支持直接分享文件时，自动下载/保存图片到本地
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = '人物性格档案匹配结果.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(link.href);
+          
+          alert('已为您生成完整的报告图片并自动保存/下载，您可以直接发送图片给好友！');
+        }
+      }, 'image/png');
+
+    } catch (error) {
+      // 发生异常时恢复按钮显示
+      hiddenElements.forEach(el => el.style.visibility = 'visible');
+      console.error('生成图片报告失败:', error);
+      alert('生成报告图片失败，请检查网络或浏览器配置。');
+    }
+  });
+</script>
+
+
+
+<!-- 检测前面结果的，新加的 -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+<script>
+  // 页面加载完成后执行
+  document.addEventListener('DOMContentLoaded', function () {
+    const profileName = document.getElementById('profile-name');
+    const legendLabel = document.getElementById('legend-type-label');
+
+    if (profileName && legendLabel) {
+      legendLabel.textContent = profileName.textContent.trim();
+    }
+  });
+</script>
+</html>
